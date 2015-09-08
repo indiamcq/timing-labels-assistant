@@ -1,7 +1,7 @@
 ; Audacity hotkeys for segmenting Scripture for Scripture App Builder
 ; for stand alone use
 ;
-; Version 1.1
+; Version 1.2
 ;
 ; Written by Ian McQuay
 ; 2015-Jun-20
@@ -70,6 +70,10 @@ $RButton::
 		newString := getRef(newString)
 	} else {
 		send, {RButton}
+		IfWinNotExist , , ToolDock
+		{
+			ExitApp
+		}
 	}
 	return
 $tab::
@@ -77,10 +81,13 @@ $tab::
 	{
 		SetKeyDelay 200 
 		send, ^m
-		newString := getRef(newString)
-	
+		newString := getRef(newString)	
 	} else {
 		send, {Tab}
+		IfWinNotExist , , ToolDock
+		{
+			ExitApp
+		}
 	}
 	return
 	
@@ -89,22 +96,28 @@ $NumpadAdd::
 	{
 		SetKeyDelay 200 
 		send, ^m
-		newString := getRef(newString)
-	
+		newString := getRef(newString)	
 	} else {
 		send, {NumpadAdd}
+		IfWinNotExist , , ToolDock
+		{
+			ExitApp
+		}
 	}
 	return
 
 $\::
-		IfWinActive,  , ToolDock
+	IfWinActive,  , ToolDock
 	{
 		SetKeyDelay 200 
 		send, ^m
-		newString := getRef(newString)
-	
+		newString := getRef(newString)	
 	} else {
 		send, \
+		IfWinNotExist , , ToolDock
+		{
+			ExitApp
+		}
 	}
 return
 
