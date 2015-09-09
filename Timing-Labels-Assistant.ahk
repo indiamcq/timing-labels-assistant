@@ -1,7 +1,7 @@
 ; Audacity hotkeys for segmenting Scripture for Scripture App Builder
 ; for stand alone use
 ;
-; Version 1.2
+; Version 1.2.3
 ;
 ; Written by Ian McQuay
 ; 2015-Jun-20
@@ -19,7 +19,12 @@
 ; Allow only one instance
 #SingleInstance force
 SetTitleMatchMode, 1
-Menu, tray, add, Re-start timing at label? i.e. 5c, restartAt, P1
+Menu, Tray, NoStandard
+Menu, tray, Add, Suspend,     SuspendHandler  ; Add a suspend item
+Menu, tray, Add, Exit,        ExitHandler     ; Add the exit item
+Menu, restart, Add, Re-start timing at label? i.e. 5c, restartAt ; Add the re-start menu
+Menu, restart, Add, Exit,        ExitHandler     ; Add the exit item
+
 
 ; if not compiled (i.e. used as a script), Set the menu icon and use 
 if (A_IsCompiled <> 1) {
@@ -56,6 +61,10 @@ FileRead, String , %PhrasesFile%
 newString := RegExReplace(String, "^.+\r\n(.+)", "$1")
 ; Show the Phrases content
 Run, Notepad.exe "%PhrasesFile%"
+
+norestart:
+
+OnMessage(0x404,"AHK_NotifyTrayIcon") ; Check for left click on tray icon
 
 ; Exit the app
 #p::Pause                               ; Windows key p   Pauses execution of script
@@ -123,19 +132,32 @@ $\::
 return
 
 restartAt:
-	InputBox, startString, Restart, Please enter  the ref you want to restart at.
+	InputBox, startString, Restart, Please enter the ref you want to restart at. ;Get the values to match
+	if ErrorLevel ; Check for cancel button
+	{
+		ErrorLevel := 0		; reset the ErrorLevel
+		goto, norestart		; return to start 
+	}
 	Loop 
 	{
 		newString := RegExReplace(newString, "^.+\r\n(.*)", "$1")
 		testRef := RegExReplace(newString, "^([^\t]+)\t[^$]*$","$1")
-		if (newString = RegExReplace(newString, "^.+\r\n(.*)", "$1"))  
+		if (newString = RegExReplace(newString, "^.+\r\n(.*)", "$1"))  ; At the end of the string so empty
 		{ 
-			MsgBox, 16, Fatal Error, The value you entered was not found! Restart and try again.,5
-			exitApp
+			MsgBox, 16, Fatal Error, The value you entered was not found! The label must exist in the phrases file. Try again.,5  ; Tell user to try again
+			newString := RegExReplace(String, "^.+\r\n(.+)", "$1")						; reset the string to the initial value
+			goto, restartAt																; restart the process
 		}
 	} until testRef = startString	
 return
 
+ExitHandler:
+  ExitApp
+return
+
+SuspendHandler: 
+  suspend toggle
+return
 ; Functions
 
 
@@ -154,5 +176,16 @@ getRef(s)
 		send %Ref%{enter}
 		return RegExReplace(s, "^.+\r\n(.+)", "$1")
     }
+}
+AHK_NotifyTrayIcon(wParam, lParam)
+{
+ global 
+ If lParam = 0x201
+  ShowTrayPopup()
+ return
+}
+ShowTrayPopup()
+{
+  Menu, restart, Show  
 }
 ;

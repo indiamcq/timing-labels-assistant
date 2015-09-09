@@ -22,21 +22,21 @@ You may want to change the location of the phrases file path in the ini file for
   
 You can mix the methods together if you like.
 
-### New Restart at option
+### New "Re-start at" option
 
-You can now restart labeling if you quit part way through a previous session. Find the Timing-Labels-Assistant icon in the system tray or the System Tray overflow area and right click on it and select the bottom menu item, *Re-start timing at label? i.e. 5c*. The next label to be inserted will be the one you selected. If you typed a label that does not exist the script will exit with a warning.
+You can now restart labeling if you quit part way through a previous session. Find the Timing-Labels-Assistant icon in the system tray or the System Tray overflow area and left click on it and select the bottom menu item, **Re-start timing at label? i.e. 5c**. The next label to be inserted will be the one you selected. If you typed a label that does not exist then it will ask you to try again.
 
 ### Pause or exit
   * Windows + p suspends the clip
   * Typing zx exits the macro program.
-  * Right click on the icon in the taskbar (when not in Audacity) and select Exit.
+  * Left click in the icon in the taskbar and click Exit.
   * If no Audacity is open and you press any hot key the program will exit
 
 This is a no going back method, if the timing is wrong, don't delete it, just move it to the right place. Click the mouse in the circle part of the timing point, then drag the point to the correct place.
 
 When the last reference is found it is inserted then the program issues a beep then exits.
 
-The EXE is on my Google drive [Timing-Labels-Assistant.exe](https://drive.google.com/open?id=0B0Q6vfwolMZUbnBXUGFqQUxtTUE)
+The EXE is on Github [Timing-Labels-Assistant.exe](https://github.com/indiamcq/timing-labels-assistant/blob/exitIfNoAudacity/current/Timing-Labels-Assistant.exe)
 
 
 Ian 
