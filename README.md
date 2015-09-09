@@ -31,7 +31,7 @@ This is a no going back method, if the timing is wrong, don't delete it, just mo
 
 When the last reference is found it is inserted then the program issues a beep then exits.
 
-The EXE is on my Google drive [Timing-Labels-Assistant.exe](https://drive.google.com/open?id=0B0Q6vfwolMZUbnBXUGFqQUxtTUE)
+The EXE is on Github v1.1 [Timing-Labels-Assistant.exe](https://github.com/indiamcq/timing-labels-assistant/blob/master/current/Timing-Labels-Assistant.exe)
 
 
 Ian 
