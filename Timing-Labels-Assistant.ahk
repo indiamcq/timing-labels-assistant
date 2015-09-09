@@ -19,6 +19,7 @@
 ; Allow only one instance
 #SingleInstance force
 SetTitleMatchMode, 1
+Menu, tray, add, Re-start timing at label? i.e. 5c, restartAt, P1
 
 ; if not compiled (i.e. used as a script), Set the menu icon and use 
 if (A_IsCompiled <> 1) {
@@ -119,6 +120,20 @@ $\::
 			ExitApp
 		}
 	}
+return
+
+restartAt:
+	InputBox, startString, Restart, Please enter  the ref you want to restart at.
+	Loop 
+	{
+		newString := RegExReplace(newString, "^.+\r\n(.*)", "$1")
+		testRef := RegExReplace(newString, "^([^\t]+)\t[^$]*$","$1")
+		if (newString = RegExReplace(newString, "^.+\r\n(.*)", "$1"))  
+		{ 
+			MsgBox, 16, Fatal Error, The value you entered was not found! Restart and try again.,5
+			exitApp
+		}
+	} until testRef = startString	
 return
 
 ; Functions
