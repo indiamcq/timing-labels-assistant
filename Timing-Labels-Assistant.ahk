@@ -19,6 +19,8 @@
 ; Allow only one instance
 #SingleInstance force
 SetTitleMatchMode, 1
+
+; resmove the menu and create new entries
 Menu, Tray, NoStandard
 Menu, tray, Add, Suspend,     SuspendHandler  ; Add a suspend item
 Menu, tray, Add, Exit,        ExitHandler     ; Add the exit item
@@ -62,6 +64,7 @@ newString := RegExReplace(String, "^.+\r\n(.+)", "$1")
 ; Show the Phrases content
 Run, Notepad.exe "%PhrasesFile%"
 
+; come back here if cancel re-start dialog
 norestart:
 
 OnMessage(0x404,"AHK_NotifyTrayIcon") ; Check for left click on tray icon
