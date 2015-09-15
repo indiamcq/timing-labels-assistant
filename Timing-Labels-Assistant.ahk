@@ -24,7 +24,7 @@ SetTitleMatchMode, 1
 Menu, Tray, NoStandard
 Menu, tray, Add, Suspend,     SuspendHandler  ; Add a suspend item
 Menu, tray, Add, Exit,        ExitHandler     ; Add the exit item
-Menu, restart, Add, Re-start timing at label? i.e. 5c, restartAt ; Add the re-start menu
+Menu, restart, Add, Restart timing at label..., restartAt ; Add the re-start menu
 Menu, restart, Add, Exit,        ExitHandler     ; Add the exit item
 
 
@@ -34,6 +34,7 @@ if (A_IsCompiled <> 1) {
 	menu tray, Icon, %iconfile%
 }
 
+; ini file start =========================================================================================
 ; Variable for ini file
 oldinifile := "Aud-SAB-assist.ini"
 iniFile := "timing-labels-assistant.ini"
@@ -56,11 +57,12 @@ if (ErrorLevel) {
 	ExitApp
 }
 
+; String opperation setup ======================================================================
 ; Read the content into a variable
 FileRead, String , %PhrasesFile%
 
-;Trim off the unwanted first line
-newString := RegExReplace(String, "^.+\r\n(.+)", "$1")
+;Trim off the unwanted \ref line
+newString := removeRef(String)
 ; Show the Phrases content
 Run, Notepad.exe "%PhrasesFile%"
 
@@ -68,6 +70,8 @@ Run, Notepad.exe "%PhrasesFile%"
 norestart:
 
 OnMessage(0x404,"AHK_NotifyTrayIcon") ; Check for left click on tray icon
+
+; key difinitions start ==========================================================================
 
 ; Exit the app
 #p::Pause                               ; Windows key p   Pauses execution of script
@@ -134,21 +138,25 @@ $\::
 	}
 return
 
+; subroutines ===============================================================================================================
+
 restartAt:
-	InputBox, startString, Restart, Please enter the ref you want to restart at. ;Get the values to match
+	InputBox, startString, Restart, Please enter the ref you want to restart at. e.g. 5c ;Get the values to match
 	if ErrorLevel ; Check for cancel button
 	{
 		ErrorLevel := 0		; reset the ErrorLevel
 		goto, norestart		; return to start 
 	}
+	newString := removeRef(String)
 	Loop 
 	{
-		newString := RegExReplace(newString, "^.+\r\n(.*)", "$1")
+		
+		newString := removeLine(newString)
 		testRef := RegExReplace(newString, "^([^\t]+)\t[^$]*$","$1")
 		if (newString = RegExReplace(newString, "^.+\r\n(.*)", "$1"))  ; At the end of the string so empty
 		{ 
 			MsgBox, 16, Fatal Error, The value you entered was not found! The label must exist in the phrases file. Try again.,5  ; Tell user to try again
-			newString := RegExReplace(String, "^.+\r\n(.+)", "$1")						; reset the string to the initial value
+			newString := removeRef(String)						; reset the string to the initial value
 			goto, restartAt																; restart the process
 		}
 	} until testRef = startString	
@@ -169,7 +177,7 @@ getRef(s)
 {
 	;MsgBox , 8192, "Cur string", %s%, 3
 	Ref := RegExReplace(s, "^([^\t]+)\t[^$]*$","$1")
-	if ( s = RegExReplace(s, "^.+\r\n(.+)", "$1")) {
+	if ( s = removeLine(s)) {
 		SetKeyDelay, 50
 		send %Ref%{enter}
 		SoundBeep, 750, 500
@@ -177,7 +185,7 @@ getRef(s)
 	} else {
 		SetKeyDelay, 50
 		send %Ref%{enter}
-		return RegExReplace(s, "^.+\r\n(.+)", "$1")
+		return removeLine(s)
     }
 }
 AHK_NotifyTrayIcon(wParam, lParam)
@@ -190,5 +198,13 @@ AHK_NotifyTrayIcon(wParam, lParam)
 ShowTrayPopup()
 {
   Menu, restart, Show  
+}
+removeLine(s)
+{
+	return RegExReplace(s, "^.+\r\n(.+)", "$1")
+}
+removeRef(s)
+{
+	return RegExReplace(s, "^\\ref	\\gl\r\n", "")
 }
 ;
