@@ -1,7 +1,7 @@
 ; Audacity hotkeys for segmenting Scripture for Scripture App Builder
 ; for stand alone use
 ;
-; Version 1.2.3
+; Version 1.2.4
 ;
 ; Written by Ian McQuay
 ; 2015-Jun-20
