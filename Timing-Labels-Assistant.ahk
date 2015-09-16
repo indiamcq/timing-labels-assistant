@@ -141,7 +141,7 @@ return
 ; subroutines ===============================================================================================================
 
 restartAt:
-	InputBox, startString, Restart, Please enter the ref you want to restart at. e.g. 5c ;Get the values to match
+	InputBox, startString, Restart, Please enter the label you want to restart at. e.g. 5c ;Get the values to match
 	if ErrorLevel ; Check for cancel button
 	{
 		ErrorLevel := 0		; reset the ErrorLevel
