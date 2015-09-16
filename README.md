@@ -22,7 +22,7 @@ You may want to change the location of the phrases file path in the ini file for
   
 You can mix the methods together if you like.
 
-### New "Re-start at" option
+### New "Restart timing at label..." option
 
 You can now restart labeling if you quit part way through a previous session. Find the Timing-Labels-Assistant icon in the system tray or the System Tray overflow area and left click on it and select the top menu item, **Restart timing at label...**. The next label to be inserted will be the one you selected. If you typed a label that does not exist then it will ask you to try again.
 
@@ -36,7 +36,7 @@ This is a no going back method, if the timing is wrong, don't delete it, just mo
 
 When the last reference is found it is inserted then the program issues a beep then exits.
 
-The EXE is on Github [Timing-Labels-Assistant.exe](https://github.com/indiamcq/timing-labels-assistant/tree/master/current) v1.2.4
+The EXE is on Github [Timing-Labels-Assistant.exe](https://github.com/indiamcq/timing-labels-assistant/tree/master/current/Timing-Labels-Assistant.exe) v1.2.4
 
 
 Ian 
