@@ -36,7 +36,7 @@ This is a no going back method, if the timing is wrong, don't delete it, just mo
 
 When the last reference is found it is inserted then the program issues a beep then exits.
 
-The EXE, readme and source files are on Github [Timing-Labels-Assistant v1.2.4 ](https://github.com/indiamcq/timing-labels-assistant/releases)  
+The zip of the EXE and readme as well as the zip source files and Exe and readme are on Github [Timing-Labels-Assistant v1.2.4 ](https://github.com/indiamcq/timing-labels-assistant/releases)  
 
 
 Ian 
