@@ -5,7 +5,7 @@ Timing Labels Assistant for use with Audacity to produce timings for SAB
 
 ## Latest Download [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.27/Timing-Labels-Assistant_v1.2.27.zip)
 
-Release page [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.27)
+Release page [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases)
 
 ## Once only setup:
 
