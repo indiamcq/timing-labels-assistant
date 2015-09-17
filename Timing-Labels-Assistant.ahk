@@ -74,7 +74,7 @@ OnMessage(0x404,"AHK_NotifyTrayIcon") ; Check for left click on tray icon
 ; key difinitions start ==========================================================================
 
 ; Exit the app
-#p::Pause                               ; Windows key p   Pauses execution of script
+pause::Pause                               ; press pause/break key   Pauses execution of script
 :c?*:zx::ExitApp                        ; Exit the current script by typing zx
 
 ; Hotkeys start with a $ so they don't fire themselves when not in Audacity.
