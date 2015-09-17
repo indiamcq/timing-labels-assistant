@@ -3,7 +3,9 @@ Timing Labels Assistant for use with Audacity to produce timings for SAB
 
 ##### A macro tool to speedup adding timing points and labels into an Audacity label track from a Scripture App Builder generated phrases file.
 
-## Download from [Timing-Labels-Assistant v1.2.4 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.4/Timing-Labels-Assistant_v1.2.4.zip)
+## Latest Download [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.4/Timing-Labels-Assistant_v1.2.27.zip)
+
+Release page [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.27)
 
 ## Once only setup:
 
@@ -29,7 +31,7 @@ You can mix the methods together if you like.
 You can now restart labeling if you quit part way through a previous session. Find the Timing-Labels-Assistant icon in the system tray or the System Tray overflow area and left click on it and select the top menu item, **Restart timing at label...**. The next label to be inserted will be the one you selected. If you typed a label that does not exist then it will ask you to try again.
 
 ### Pause or exit
-  * Windows + p suspends the clip
+  * pause/break key pauses the clip
   * Typing zx exits the macro program.
   * Left click in the icon in the taskbar and click Exit.
   * If no Audacity is open and you press any hot key the program will exit
@@ -38,7 +40,7 @@ This is a no going back method, if the timing is wrong, don't delete it, just mo
 
 When the last reference is found it is inserted then the program issues a beep then exits.
 
-The zip of the EXE and readme as well as the zip source files and Exe and readme are on Github [Timing-Labels-Assistant v1.2.4 ](https://github.com/indiamcq/timing-labels-assistant/releases)  
+The zip of the EXE and readme as well as the zip source files and Exe and readme are on Github [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases)  
 
 
 Ian 
