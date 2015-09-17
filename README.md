@@ -3,7 +3,7 @@ Timing Labels Assistant for use with Audacity to produce timings for SAB
 
 ##### A macro tool to speedup adding timing points and labels into an Audacity label track from a Scripture App Builder generated phrases file.
 
-## Latest Download [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.4/Timing-Labels-Assistant_v1.2.27.zip)
+## Latest Download [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.27/Timing-Labels-Assistant_v1.2.27.zip)
 
 Release page [Timing-Labels-Assistant v1.2.27 ](https://github.com/indiamcq/timing-labels-assistant/releases/download/1.2.27)
 
