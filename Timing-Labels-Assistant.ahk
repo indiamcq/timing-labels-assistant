@@ -14,6 +14,9 @@
 	; Cancel button exits script. As does Esc
 	; added handling to copy old ini file to new ini name and delete old file
 	; added icon if used as a script
+; Revised by IM 2015-10-01
+	; created keysub to remove duplicate code in each hotkey.
+	; found way of selecting exe file window so language setting problem avoided. No more ToolDock
 ; 
 ;
 ; Allow only one instance
@@ -34,6 +37,7 @@ if (A_IsCompiled <> 1) {
 	menu tray, Icon, %iconfile%
 }
 
+
 ; ini file start =========================================================================================
 ; Variable for ini file
 oldinifile := "Aud-SAB-assist.ini"
@@ -50,6 +54,7 @@ if (FileExist(iniFile)) {
 }
 ;Read ini file 
 IniRead, PhrasesPath, %iniFile%, Path, PhrasesPath , C:\
+
 
 ; Select phrases file
 FileSelectFile, PhrasesFile , 1 , %PhrasesPath% , Select Phrase file for currrent chapter, Phrases (*.phrases)
@@ -79,66 +84,65 @@ pause::Pause                               ; press pause/break key   Pauses exec
 
 ; Hotkeys start with a $ so they don't fire themselves when not in Audacity.
 $RButton::
-	IfWinActive,  , ToolDock
-	{
-		SetKeyDelay 200 
-		send, {LButton}
-		send ^b
-		newString := getRef(newString)
-	} else {
-		send, {RButton}
-		IfWinNotExist , , ToolDock
-		{
-			ExitApp
-		}
-	}
+	keytype := "RButton"
+	gosub, keysub
 	return
+	
 $tab::
-	IfWinActive,  , ToolDock
-	{
-		SetKeyDelay 200 
-		send, ^m
-		newString := getRef(newString)	
-	} else {
-		send, {Tab}
-		IfWinNotExist , , ToolDock
-		{
-			ExitApp
-		}
-	}
+	keytype := "tab"
+	gosub, keysub
 	return
 	
 $NumpadAdd::
-	IfWinActive,  , ToolDock
-	{
-		SetKeyDelay 200 
-		send, ^m
-		newString := getRef(newString)	
-	} else {
-		send, {NumpadAdd}
-		IfWinNotExist , , ToolDock
-		{
-			ExitApp
-		}
-	}
+	keytype := "NumpadAdd"
+	gosub, keysub
 	return
 
 $\::
-	IfWinActive,  , ToolDock
-	{
-		SetKeyDelay 200 
-		send, ^m
-		newString := getRef(newString)	
+	keytype := "backslash"
+	gosub, keysub
+return
+
+; subroutines ===============================================================================================================
+
+keysub:
+	IfWinActive, ahk_exe audacity.exe
+	{	
+		if (keytype = "RButton") 
+		{
+			; handle
+			SetKeyDelay 200 
+			send, {LButton}
+			send ^b
+			newString := getRef(newString)
+		} 
+		else
+		{
+			; handle on the fly keys NumpadAdd, tab or \
+			SetKeyDelay 200 
+			send, ^m
+			newString := getRef(newString)	
+		}
 	} else {
-		send, \
-		IfWinNotExist , , ToolDock
+		if (keytype = "RButton")
+		{
+			send, {RButton}
+		} else if (keytype = "tab")
+		{
+			send, {Tab}	
+		} else if (keytype = "NumpadAdd")
+		{
+			send, {NumpadAdd}
+		} else if (keytype = "backslash")
+		{
+			send, \
+		}
+		ifWinNotExist, ahk_exe audacity.exe
 		{
 			ExitApp
 		}
 	}
 return
-
-; subroutines ===============================================================================================================
 
 restartAt:
 	InputBox, startString, Restart, Please enter the label you want to restart at. e.g. 5c ;Get the values to match
@@ -169,7 +173,11 @@ return
 SuspendHandler: 
   suspend toggle
 return
-; Functions
+
+
+	
+	
+; Functions =============================================================================================================
 
 
 ; Function to get ref and trim from front
