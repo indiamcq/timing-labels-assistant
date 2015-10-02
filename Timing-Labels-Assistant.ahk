@@ -17,6 +17,9 @@
 ; Revised by IM 2015-10-01
 	; created keysub to remove duplicate code in each hotkey.
 	; found way of selecting exe file window so language setting problem avoided. No more ToolDock
+; Revised by IM 2015-10-02
+	; now pass actual key stroke to keysub. Removed need for if statements when Audacity not active. Much easier to add a new key shuold it be needed.
+	; also added some documentation in keysub
 ; 
 ;
 ; Allow only one instance
@@ -82,35 +85,38 @@ OnMessage(0x404,"AHK_NotifyTrayIcon") ; Check for left click on tray icon
 pause::Pause                               ; press pause/break key   Pauses execution of script
 :c?*:zx::ExitApp                        ; Exit the current script by typing zx
 
-; Hotkeys start with a $ so they don't fire themselves when not in Audacity.
+; Hotkeys start with a $ so they don't repeatedly fire themselves when not in Audacity.
+
 $RButton::
-	keytype := "RButton"
+	keytype := "{RButton}"
 	gosub, keysub
-	return
+return
 	
 $tab::
-	keytype := "tab"
+	keytype := "{tab}"
 	gosub, keysub
-	return
+return
 	
 $NumpadAdd::
-	keytype := "NumpadAdd"
+	keytype := "{NumpadAdd}"
 	gosub, keysub
-	return
+return
 
 $\::
-	keytype := "backslash"
+	keytype := "\"
 	gosub, keysub
 return
 
 ; subroutines ===============================================================================================================
 
 keysub:
-	IfWinActive, ahk_exe audacity.exe
+	; provides the logic for processing two types of hot keys.
+	IfWinActive, ahk_exe audacity.exe 
 	{	
-		if (keytype = "RButton") 
+		; When Audacity is running
+		if (keytype = "{RButton}") 
 		{
-			; handle
+			; handle right mouse button presses
 			SetKeyDelay 200 
 			send, {LButton}
 			send ^b
@@ -118,26 +124,17 @@ keysub:
 		} 
 		else
 		{
-			; handle on the fly keys NumpadAdd, tab or \
+			; handle on the fly keys NumpadAdd, tab or \ during playback of audio.
 			SetKeyDelay 200 
 			send, ^m
 			newString := getRef(newString)	
 		}
-	} else {
-		if (keytype = "RButton")
-		{
-			send, {RButton}
-		} else if (keytype = "tab")
-		{
-			send, {Tab}	
-		} else if (keytype = "NumpadAdd")
-		{
-			send, {NumpadAdd}
-		} else if (keytype = "backslash")
-		{
-			send, \
-		}
-		ifWinNotExist, ahk_exe audacity.exe
+	} 
+	else 
+	{
+		; If Audacity is not in focus then send the pressed key
+		send, %keytype%
+		ifWinNotExist, ahk_exe audacity.exe  ; exit app if Audacity is not running.
 		{
 			ExitApp
 		}
