@@ -20,24 +20,34 @@
 ; Revised by IM 2015-10-02
 	; now pass actual key stroke to keysub. Removed need for if statements when Audacity not active. Much easier to add a new key shuold it be needed.
 	; also added some documentation in keysub
+; Revised IM 2015-10-03
+	; * Pause now suspends all other hotkeys and puts notification above tray icon
+	; * Suspend in menu now in both right and left click
+	; * Suspend also puts up notification of state
+	; * Suspend disables the Restart at menu item
+	; * Suspend also toggles check mark on the Suspend menu item
+
 ; 
 ;
 ; Allow only one instance
 #SingleInstance force
-SetTitleMatchMode, 1
+
 
 ; resmove the menu and create new entries
 Menu, Tray, NoStandard
-Menu, tray, Add, Suspend,     SuspendHandler  ; Add a suspend item
+Menu, tray, Add, Restart timing at label..., restartAt ; Add the re-start menu
+Menu, tray, Add, Suspend hot keys,     SuspendHandler  ; Add a suspend item
 Menu, tray, Add, Exit,        ExitHandler     ; Add the exit item
+; Left click menu items
 Menu, restart, Add, Restart timing at label..., restartAt ; Add the re-start menu
+Menu, restart, Add, Suspend hot keys,     SuspendHandler  ; Add a suspend item
 Menu, restart, Add, Exit,        ExitHandler     ; Add the exit item
 
 
 ; if not compiled (i.e. used as a script), Set the menu icon and use 
 if (A_IsCompiled <> 1) {
 	iconfile := "Timing-Labels-Assistant.ico"
-	menu tray, Icon, %iconfile%
+	menu, tray, Icon, %iconfile%
 }
 
 
@@ -64,6 +74,12 @@ FileSelectFile, PhrasesFile , 1 , %PhrasesPath% , Select Phrase file for currren
 if (ErrorLevel) {
 	ExitApp
 }
+; Update path if needed
+curpath := RegExReplace(PhrasesFile, "^(..|....+)\\[^\\]+$", "$1")				; get curent path
+if (curpath <> PhrasesPath)														; compare curpath to PharasePath, if different update the ini file
+{
+	IniWrite, %curpath%, %iniFile%, Path, PhrasesPath
+}
 
 ; String opperation setup ======================================================================
 ; Read the content into a variable
@@ -82,8 +98,14 @@ OnMessage(0x404,"AHK_NotifyTrayIcon") ; Check for left click on tray icon
 ; key difinitions start ==========================================================================
 
 ; Exit the app
-pause::Pause                               ; press pause/break key   Pauses execution of script
-:c?*:zx::ExitApp                        ; Exit the current script by typing zx
+pause::
+	suspend
+	gosub, suspendTip
+return
+
+:c?*:zx::
+	ExitApp                        ; Exit the current script by typing zx
+return
 
 ; Hotkeys start with a $ so they don't repeatedly fire themselves when not in Audacity.
 
@@ -169,10 +191,20 @@ return
 
 SuspendHandler: 
   suspend toggle
+  gosub, suspendTip
 return
 
+suspendTip:
+  if (A_IsSuspended)
+	{
+		TrayTip, Timing Labels Assistant, Hot Keys suspended`nPress [pause] to resume
+	} else {
+		TrayTip, Timing Labels Assistant, Hot Keys active
+	}
+	Menu, restart, ToggleEnable, Restart timing at label...
+	Menu, restart, ToggleCheck, Suspend hot keys
+return
 
-	
 	
 ; Functions =============================================================================================================
 
