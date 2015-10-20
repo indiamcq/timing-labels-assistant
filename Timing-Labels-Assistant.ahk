@@ -202,7 +202,9 @@ suspendTip:
 		TrayTip, Timing Labels Assistant, Hot Keys active
 	}
 	Menu, restart, ToggleEnable, Restart timing at label...
+	Menu, Tray, ToggleEnable, Restart timing at label...
 	Menu, restart, ToggleCheck, Suspend hot keys
+	Menu, Tray, ToggleCheck, Suspend hot keys
 return
 
 	
