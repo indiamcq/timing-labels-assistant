@@ -15,5 +15,5 @@ goto :eof
 :dozip
 if exist Timing-Labels-Assistant_v%majorminorversion%.%versionbuild%.zip  set /A versionbuild=%versionbuild%+1
 if exist Timing-Labels-Assistant_v%majorminorversion%.%versionbuild%.zip  goto :dozip
-call "C:\Program Files\7-Zip\7z.exe" a  -tzip Timing-Labels-Assistant_v%majorminorversion%.%versionbuild%.zip *.exe *.html
+call "C:\Program Files\7-Zip\7z.exe" a  -tzip Timing-Labels-Assistant_v%majorminorversion%.%versionbuild%.zip Timing-Labels-Assistant.exe *.html
 goto :eof
