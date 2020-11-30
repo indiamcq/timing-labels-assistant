@@ -62,7 +62,7 @@ if (FileExist(oldiniFile)) {
 ; Create ini file if needed
 if (FileExist(iniFile)) {
 } else {
-	FileSelectFolder, PhrasesPath , \ , 1, Choose folder where Phrases files are found.
+	FileSelectFolder, PhrasesPath ,\Users\%A_Username%\Documents\App Builder, 1, Choose folder where Phrases files are found.
 	IniWrite, %PhrasesPath%, %iniFile%, Path, PhrasesPath
 }
 ;Read ini file 
