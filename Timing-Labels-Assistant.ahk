@@ -26,6 +26,8 @@
 	; * Suspend also puts up notification of state
 	; * Suspend disables the Restart at menu item
 	; * Suspend also toggles check mark on the Suspend menu item
+; Revised IM 2020-12-01
+  ; Revised path for Initialization to point to Documents\App Builder
 
 ; 
 ;
@@ -62,7 +64,7 @@ if (FileExist(oldiniFile)) {
 ; Create ini file if needed
 if (FileExist(iniFile)) {
 } else {
-	FileSelectFolder, PhrasesPath , \ , 1, Choose folder where Phrases files are found.
+	FileSelectFolder, PhrasesPath ,C:\Users\%A_Username%\Documents\App Builder, 1, Choose folder where Phrases files are found.
 	IniWrite, %PhrasesPath%, %iniFile%, Path, PhrasesPath
 }
 ;Read ini file 
